@@ -1,12 +1,19 @@
 import { useState, useEffect, FormEvent, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext, } from '../../context/AuthContext';
 
 const RegistrationPage = () => {
-  const { error, loading } = useContext(AuthContext);
+  const { saveUser, error, loading } = useContext(AuthContext);
+  const [formData, setFormData] = useState<User>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+  });
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    saveUser(formData);
   };
 
   return (
@@ -24,6 +31,10 @@ const RegistrationPage = () => {
                 type='text'
                 className='form-control'
                 placeholder='First Name'
+                value={formData.firstName}
+                onChange={e =>
+                  setFormData({ ...formData, firstName: e.target.value })
+                }
               />
             </div>
             <div className='form-group my-3'>
@@ -31,16 +42,30 @@ const RegistrationPage = () => {
                 type='text'
                 className='form-control'
                 placeholder='Last Name'
+                value={formData.lastName}
+                onChange={e =>
+                  setFormData({ ...formData, lastName: e.target.value })
+                }
               />
             </div>
             <div className='form-group my-3'>
-              <input type='text' className='form-control' placeholder='Email' />
+              <input type='text' 
+              className='form-control' 
+              placeholder='Email'
+              value={formData.email}
+              onChange={e =>
+                  setFormData({ ...formData, email: e.target.value })
+                } />
             </div>
             <div className='form-group my-3'>
               <input
                 type='password'
                 className='form-control'
                 placeholder='Password'
+                value={formData.password}
+                onChange={e =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
               />
             </div>
             <div className='d-grid'>
