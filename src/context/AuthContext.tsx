@@ -6,12 +6,15 @@ const initialState = {
   loading: false,
   error: '',
   userLogin: () => {},
+  saveUser: () => {},
 };
 
 const authReducer = (state: any, action: any) => {
   switch (action.type) {
+    case 'SAVE_USER':
+      return { ...state, user: action.payload};
     case 'ALERT':
-      return { ...state, alert: action.payload };
+      return { ...state, alert: true };
     case 'LOGIN':
       return { ...state, loading: false, error: '' };
     case 'SET_LOADING':
@@ -41,7 +44,15 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   };
 
-  // Function for userRegistration
+  const saveUser = async (user: User) => {
+    try {
+      let { data } = await instance.post('/auth/register', user);
+      console.log('this is my data', data);
+      dispatch({ type: 'SAVE_USER' });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <AuthContext.Provider
@@ -50,6 +61,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         alert: state.alert,
         loading: state.loading,
         userLogin,
+        saveUser,
       }}>
       {children}
     </AuthContext.Provider>

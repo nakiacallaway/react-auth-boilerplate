@@ -45,5 +45,6 @@ export const GlobalProvider: React.FC = ({ children }) => {
       }}>
       {children}
     </GlobalContext.Provider>
+    
   );
 };
