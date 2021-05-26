@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
+  const history = useHistory();
   const location = useLocation();
 
   useEffect(() => {
@@ -14,8 +15,8 @@ const Navbar = () => {
   };
 
   const userLogout = () => {
-    // log user out
-    // send user to login page
+    localStorage.clear();
+    history.push('/auth/login');
   };
 
   return (
