@@ -1,7 +1,15 @@
-import { useEffect } from 'react';
+import userEvent from '@testing-library/user-event';
+import { useContext, useEffect, useReducer } from 'react';
+import { useParams } from 'react-router';
+import { GlobalContext } from '../context/GlobalContext';
 
 const HomePage = () => {
-  useEffect(() => {}, []);
+  const {users, getUsers } = useContext(GlobalContext);
+
+  useEffect(() => {
+    getUsers();
+    console.log(users);
+  }, []);
 
   return (
     <div id='home'>
@@ -15,7 +23,11 @@ const HomePage = () => {
       </div>
       <div className='row text-center'>
         <div className='col-6 offset-3'>
-          <ul className='list-group'>{/* Render Users in App */}</ul>
+          <ul className='list-group'>
+            {users?.map((user:User, i:number) => {
+            return <li key={i}> {user.firstName}{' '}{user.lastName} </li>
+          })}
+          </ul>
         </div>
       </div>
     </div>

@@ -47,7 +47,6 @@ export const AuthProvider: React.FC = ({ children }) => {
   const saveUser = async (user: User) => {
     try {
       let { data } = await instance.post('/auth/register', user);
-      console.log('this is my data', data);
       dispatch({ type: 'SAVE_USER' });
     } catch (e) {
       console.log(e);
